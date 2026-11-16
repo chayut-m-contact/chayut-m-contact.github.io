@@ -76,8 +76,8 @@ h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clam
 
   <div class="row fade d6">
     <a href="tel:+66883551559"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call</a>
-    <a href="mailto:chayutmookdaanan@gmail.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email</a>
-    <a id="vcf" href="#" download="Chayut-Mookda-anan.vcf"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Save</a>
+    <a id="mail" href="https://mail.google.com/mail/?view=cm&fs=1&to=chayutmookdaanan@gmail.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email</a>
+    <a href="chayut.vcf"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Save</a>
   </div>
 
   <div class="addr fade d6">
@@ -87,8 +87,24 @@ h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clam
   <p class="foot">Inline Network</p>
 </main>
 <script>
-var v=["BEGIN:VCARD","VERSION:3.0","N:Mookda-anan;Chayut;;;","FN:Chayut Mookda-anan","ORG:INLINE NETWORK CO., LTD.","TITLE:Overseas Sales Executive","TEL;TYPE=CELL:+66883551559","TEL;TYPE=FAX:+6629915806","EMAIL:chayutmookdaanan@gmail.com","ADR;TYPE=WORK:;;87/2 Moo 3, Soi Wat Bangkrang, Bangkruay-Sainoi Rd., Bangkrang;Mueang Nonthaburi;Nonthaburi;11000;Thailand","URL:https://chayut-m-contact.github.io","END:VCARD"].join("\r\n");
-document.getElementById("vcf").href="data:text/vcard;charset=utf-8,"+encodeURIComponent(v);
+(function(){
+  var to="chayutmookdaanan@gmail.com", a=document.getElementById("mail"), ua=navigator.userAgent;
+  var web="https://mail.google.com/mail/?view=cm&fs=1&to="+to;
+  var ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+  var android=/Android/.test(ua);
+  if(android){
+    a.removeAttribute("target");
+    a.href="intent:"+to+"#Intent;scheme=mailto;package=com.google.android.gm;S.browser_fallback_url="+encodeURIComponent(web)+";end";
+  } else if(ios){
+    a.removeAttribute("target");
+    a.addEventListener("click",function(e){
+      e.preventDefault();
+      var t=setTimeout(function(){ if(!document.hidden) location.href=web; },1500);
+      document.addEventListener("visibilitychange",function(){ if(document.hidden) clearTimeout(t); },{once:true});
+      location.href="googlegmail://co?to="+to;
+    });
+  }
+})();
 </script>
 </body>
 </html>
